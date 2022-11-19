@@ -1,28 +1,47 @@
-import { useState } from 'react';      
-function Header({title}) {
-  console.log(title)
-  return <h1>{title ? title : 'Default title'}</h1>;
+import Head from 'next/head';
+import Layout, { siteTitle } from '../components/layout';
+import utilStyles from '../styles/utils.module.css';
+import { getSortedPostsData } from '../lib/posts';
+import Link from 'next/link';
+import Date from '../components/date';
+
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
 }
-      
-export default function HomePage() {
-  const names = ['Ada Lovelace', 'Grace Hopper', 'Margaret Hamilton'];
-  const [likes, setLikes] = useState(0);
 
-  function handleClick() {
-    console.log("increment like count");
-    setLikes(likes + 1);
-  }  
-        
+export default function Home({ allPostsData }) {
   return (
-    <div>
-      <Header title = "React Next Modifed 💙" />
-        <ul>
-          {names.map((name) => (
-            <li key={name}>{name}</li>
+    <Layout home>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
+      <section className={utilStyles.headingMd}>
+        <p>[Xiangci CoachPen is a smart homework correction AI assistant.]</p>
+        <p>
+          (This is a trial website - 尝试使用Next.js来构建题目库编辑工具。{' '}
+          <a href="https://nextjs.org/learn">关于Next.js参考Next.js tutorial</a>.)
+        </p>
+      </section>
+      {/* Add this <section> tag below the existing <section> tag */}
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={utilStyles.headingLg}>Blog</h2>
+        <ul className={utilStyles.list}>
+          {allPostsData.map(({ id, date, title }) => (
+            <li className={utilStyles.listItem} key={id}>
+              <Link href={`/posts/${id}`}>{title}</Link>
+              <br />
+                <small className={utilStyles.lightText}>
+                  <Date dateString={date} />
+                </small>
+              </li>
           ))}
-            </ul>
-            <button onClick={handleClick}>Like({likes})</button>
-          </div>
-        );
-      }
-
+        </ul>
+      </section>
+    </Layout>
+  );
+}

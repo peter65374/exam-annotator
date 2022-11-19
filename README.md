@@ -1,3 +1,1 @@
-# 试题标注编辑生产力工具
-
-Web based Tools
+This is a starter template for [Learn Next.js](https://nextjs.org/learn).
