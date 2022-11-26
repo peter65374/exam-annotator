@@ -1,1 +1,1 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+Open exam fort is a open exam and questions bank. The exam annoator is the editor for questioms importing.
